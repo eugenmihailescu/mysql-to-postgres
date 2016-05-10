@@ -1,0 +1,31 @@
+app:
+  resource: '@PgMigratorBundle/Controller/'
+  type: annotation
+homepage:
+  path: /
+  defaults:
+    _controller: PgMigratorBundle:Default:index
+generatesql:
+  path: /sqlscript
+  defaults:
+    _controller: PgMigratorBundle:Default:generateSqlScript
+  methods:
+  - POST
+migratedata:
+  path: /migratedata
+  defaults:
+    _controller: PgMigratorBundle:Default:runSqlScriptToPostgres
+downloadfile:
+  path: /download/{tmpname}
+  defaults:
+    _controller: PgMigratorBundle:Default:downloadFile  
+progress:
+  path: /progress/{token}
+  defaults:
+    _controller: PgMigratorBundle:MySQLProgress:getProgress
+    token: ~
+clearprogress:
+  path: /progress/{token}/clear
+  defaults:
+    _controller: PgMigratorBundle:MySQLProgress:clearProgress
+    token: ~

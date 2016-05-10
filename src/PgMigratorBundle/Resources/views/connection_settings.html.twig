@@ -1,0 +1,101 @@
+{% extends 'PgMigratorBundle::base.html.twig' %} {% block body %}
+<div class="alert alert-info" role="alert" style="inline-block">{{ 'This tool aids in generating a PostgreSql script for a MySql database. Moreover it allows you to migrate that script automatically on a PostgreSql server.'|trans }}</div>
+<div id="notification_bar" class="block-ui-off" role="alert" style="inline-block">
+</div>
+<div class="form-horizontal"
+	style="overflow: hidden; position: relative; width: 100%;">
+	{% include 'PgMigratorBundle::mysql_connection_settings.html.twig' %}
+	
+	{% include 'PgMigratorBundle::pgsql_connection_settings.html.twig' %}
+</div>
+
+{% endblock %} {% block javascript_footer %}
+<script type="text/javascript">
+var mysql_progressToken='{{ csrf_token('mysql_progress') }}';
+var pgsql_progressToken='{{ csrf_token('pgsql_progress') }}';
+var hidden_class='block-ui-off';
+
+function sendAlert(message,is_error){
+	is_error='undefined'==typeof is_error?false:is_error;
+	var alert_div="<div class='alert alert-"+(is_error?'danger':'success')+"'>";
+	alert_div+="<button type='button' class='close' data-dismiss='alert' aria-label='Close'>";
+	alert_div+="<span aria-hidden='true'>&times;</span></button><span>"+message+"</span></div>";
+	$('#notification_bar').append(alert_div).removeClass(hidden_class);
+}
+
+function getCommonParams(driver){
+	var params=['host','port','dbname','user','password'],result={},i;
+	for(i=0;i<params.length;i+=1)
+		result[params[i]]=jQuery('#'+driver+params[i]).val();
+
+	result['droptables']=jQuery('#'+driver+'droptables').is(":checked");
+	
+	return result;
+}
+
+function getProgressListener(driver){
+	var loop=setInterval(function(){
+		$.ajax({
+			url:'{{ path('progress') }}/'+window[driver+'_progressToken'],
+			error:function(xhr,textStatus,errorThrown){
+				$('#'+driver+'genscript-progress .progress-bar').addClass('progress-bar-warning').text(textStatus);
+			},
+			success:function(data, textStatus, xhr){
+				if(data.progress){
+					$('#'+driver+'genscript-progress .progress-bar')
+					.attr('aria-valuenow',data.progress.percent)
+					.css('width',data.progress.percent+'%')
+					.text(data.progress.percent+'%');
+					
+					if(data.progress.percent>=100){
+						clearInterval(loop);
+						$('#'+driver+'genscript-progress .progress-bar').addClass('progress-bar-success');
+						$.ajax({
+							url:'{{ path('progress') }}/'+window[driver+'_progressToken']+'/clear',
+							success:function(data, textStatus, xhr){
+								setTimeout(function(){$('#'+driver+'genscript-progress').addClass(hidden_class);},1000);								
+								},
+							error:function(xhr,textStatus,errorThrown){
+								$('#'+driver+'genscript-progress .progress-bar').addClass('progress-bar-warning').text(textStatus);
+								},
+							type: 'GET',
+							dataType:'json'
+							});
+					}
+				}
+			},
+			type: 'GET',
+			dataType:'json'
+			});
+		},1000);
+
+	return loop;
+}
+
+(function($){
+	$(document).ready(function(){
+		$('form').submit(function(e){
+			e.preventDefault();
+
+			if(!$(e.target).data('bs.validator').isIncomplete())
+			{				
+				var fct=$(e.target).data('onsubmit');
+			
+				window[fct]($);
+			}
+			return false;
+		});
+
+		$('#mysqldroptables').change(function(){
+			$('#pgsqldroptables').prop('checked',$(this).is(':checked'));	
+		});
+
+		$('#pgsqldroptables').change(function(){
+			$('#mysqldroptables').prop('checked',$(this).is(':checked'));	
+		});
+	});
+})(jQuery);
+
+BlockUI.init('{{ 'label.blockui'|trans }}');
+</script>
+{% endblock %}

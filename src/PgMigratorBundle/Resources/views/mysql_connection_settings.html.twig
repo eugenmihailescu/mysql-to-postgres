@@ -1,0 +1,167 @@
+<form data-toggle="validator" role="form" data-onsubmit="generateSQL"
+	id="mysqlForm">
+	<div>
+		<div class="panel panel-default">
+			<div class="panel-heading">{{ 'label.mysqlsrc'|trans }}</div>
+			<div class="panel-body">
+				<div class="form-group">
+					<label for="mysqlhost" class="col-sm-5 control-label">{{
+						'label.host'|trans }}</label>
+					<div class="col-sm-7">
+						<input type="text" class="form-control" id="mysqlhost"
+							required="required"
+							placeholder="{{ 'placeholder.ip_or_host'|trans({'server.type':'MySql'}) }}">
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="mysqlport" class="col-sm-5 control-label">{{
+						'label.port'|trans }}</label>
+					<div class="col-sm-7">
+						<input type="number" class="form-control" id="mysqlport" min="0"
+							max="65535"
+							placeholder="{{ 'placeholder.empty_or_port'|trans({'default.port':3306}) }}">
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="mysqldbname" class="col-sm-5 control-label">{{
+						'label.dbname'|trans }}</label>
+					<div class="col-sm-7">
+						<input type="text" class="form-control" id="mysqldbname"
+							required="required"
+							placeholder="{{ 'placeholder.db_name'|trans({'server.role':'source'|trans}) }}">
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="mysqluser" class="col-sm-5 control-label">{{
+						'label.username'|trans }}</label>
+					<div class="col-sm-7">
+						<input type="text" class="form-control" id="mysqluser"
+							required="required"
+							placeholder="{{ 'placeholder.username'|trans({'server.type':'MySql'}) }}">
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="mysqlpassword" class="col-sm-5 control-label">{{
+						'label.password'|trans }}</label>
+					<div class="col-sm-7">
+						<input type="password" class="form-control" id="mysqlpassword"
+							required="required"
+							placeholder="{{ 'placeholder.mysqlpwd'|trans({'server.type':'MySql'}) }}">
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="mysqlcharset" class="col-sm-5 control-label">{{
+						'label.charset'|trans }}</label>
+					<div class="col-sm-7">
+						<input type="text" class="form-control" id="mysqlcharset"
+							placeholder="{{ 'placeholder.mysqlcharset'|trans({'server.type':'MySql'}) }}">
+					</div>
+				</div>
+				<div class="form-group col-sm-12">
+					<input type="checkbox" id="mysqldroptables"> <label for="mysqldroptables">{{
+						'label.mysqldrop'|trans({'dropstmt':'label.droptbl'|trans}) }}</label>
+				</div>
+			</div>
+		</div>
+		<div>
+			<button id="mysqlgenscript" type="submit"
+				class="btn btn-success center-block">{{ 'label.gensql'|trans }}{% if mysql_script_limit is defined and mysql_script_limit > 0 %}{{ ' <'~mysql_script_limit|bytestr(0) }}{% endif %}</button>
+			<p class="help-block">This will generate the PostgreSql script of a MySql database.</p>
+		</div>
+		<div class="progress block-ui-off" id="mysqlgenscript-progress">
+			<div class="progress-bar" role="progressbar" aria-valuenow="0"
+				aria-valuemin="0" aria-valuemax="100" style="min-width: 2em;">0%</div>
+		</div>
+		<button type="button" id="mysql-download-link" class="btn btn-default block-ui-off center-block" href="#" role="button">{{ 'btn.download'|trans }}</button>
+	</div>
+</form>
+{% block javascript_footer %}
+<script type="text/javascript">
+function getMySqlParams(){
+	var mysql=getCommonParams('mysql');
+	mysql['charset']=$('#mysqlcharset').val();
+	mysql['ptoken']=mysql_progressToken;
+
+	return mysql;
+}
+function generateSQL($,callback){
+	if('undefined'==typeof callback)
+		callback=false;
+
+	$('#notification_bar').addClass(hidden_class);
+	
+	$('#mysqlgenscript-progress').removeClass(hidden_class);
+	
+	$('#mysqlgenscript-progress .progress-bar')
+		.removeClass('progress-bar-warning progress-bar-success progress-bar-danger')
+		.attr('aria-valuenow',0)
+		.css('width',0)
+		.text('0%');
+	
+	var progressLoop=getProgressListener('mysql');
+	
+	var onComplete=function(xhr,status){
+		if(!callback)
+			BlockUI.unblock();
+	};
+	var onError=function(xhr,textStatus,errorThrown){
+		clearInterval(progressLoop);
+		$('#mysqlgenscript-progress .progress-bar').addClass('progress-bar-danger').text(textStatus);
+		if(callback)
+			callback(false);
+		else{
+			sendAlert('object'==typeof errorThrown?errorThrown.message:errorThrown,true);
+		}
+	};
+	var onSuccess=function(data, textStatus, xhr){
+		try{
+			if(data.success)
+			{
+				$('#mysql-download-link').removeClass(hidden_class).bind('click',function(){
+					location.href='/download/'+data.filename;
+					$(this).addClass(hidden_class);
+				});
+
+				if(callback)
+					callback(data.filename);
+				else
+					sendAlert(data.message.content);
+			}
+			else
+			{
+				var error_msg=data.message.content+"\n"+data.warning+"\n"+data.message.trace, 
+					error_file=data.message.file,
+					error_line=data.message.line;
+				
+				onError(xhr,'{{ 'application.error'|trans }}',new Error(error_msg, error_file, error_line));
+			}
+		}
+		catch(e){
+			if('string'==typeof e)
+				onError(xhr,'{{ 'application.error'|trans }}',new Error(e));
+			else
+				onError(xhr,'{{ 'application.error'|trans }}',e);
+		}
+	};
+
+	$.ajax(
+			{
+				url:'{{ path('generatesql') }}',
+				data: {
+						mysql:getMySqlParams() 
+				}, 
+				complete:onComplete, 
+				error:onError, 
+				success:onSuccess,
+				type: 'POST',
+				dataType:'json'
+			}
+	);	
+
+	
+	BlockUI.block();
+	
+}
+
+</script>
+{% endblock %}

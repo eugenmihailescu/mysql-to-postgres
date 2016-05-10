@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>
+		{% block title %}
+		MySQL to PostgreSQL
+		{% endblock %}
+	</title>
+
+	{% block head %}
+		{% block stylesheets %}
+			{% stylesheets '@bootstrap_css' '@app_css' %}
+			<link rel="stylesheet" type="text/css" media="screen" href="{{ asset_url }}"/>
+			{% endstylesheets %}
+		{% endblock %}
+		{% block javascripts_header %}
+			{% javascripts '@jquery' '@bootstrap_js' '@bootstrap_validator' '@app_js' %}
+			<script type="text/javascript" src="{{ asset_url }}"></script>
+			{% endjavascripts %}
+		{% endblock %}
+	{% endblock %}
+</head>
+<body>
+<div style="max-width: 640px;margin-left:auto;margin-right:auto;">
+{% block body %}
+{% endblock %}
+
+{% block footer %}
+{% endblock %}
+</div>
+{% block javascript_footer %}
+{% endblock %}
+</body>
+</html>
