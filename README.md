@@ -23,33 +23,41 @@ composer install # this will install the project dependencies
 ```
 At some point the install script may ask you to enter some parameters like `database_host`, `mailer_host`, etc. Just respond with the default values (ie. press Enter).
 
-So far you installed the application. If you want to test it locally then just run the followin commands at your terminal:
+So far you installed the application. If you want to test it locally then just run the following commands at your terminal:
 ```bash
 cd mysql-to-postgres # the app directory
 bin/console server:run # now test the app at: http://localhost:8000
 ```
-In case you want to install this application at a web server then [follow these instruction](http://symfony.com/doc/current/cookbook/configuration/web_server_configuration.html).
+In case you want to install this application on a web server then [follow these instruction](http://symfony.com/doc/current/cookbook/configuration/web_server_configuration.html).
 
 ### Configuration
 
-1. Localization
-2. Temporary data and download path
-3. Temporary SQL files retention period
-4. SQL script limits
+1. [Localization](#localization)
+2. [Temporary data and download path](#temp-path)
+3. [Temporary SQL files retention period](#retention)
+4. [SQL script limits](#script-limit)
+
+<a id="localization">Localization</a>
 
 Right now the application is **localized** only in English. If you want to translate it to some other language then clone `src/PgMigratorBundle/Resources/translations/messages.en.xlf` to `messages.XX.xlf` where `XX` is your target language. In the newly created file change the English content of each `target` tag. To activate the newly created language change the parameter `locale: en` to `locale: XX` in `app/config/config.yml` file.
 
+<a id="temp-path">Temporary data and download path</a>
+
 Change the (**relative|absolute**) **path** of the parameters `data_path` respectively `download_path` from `app/config/config.yml` file.
+
+<a id="retention">Temporary SQL files retention period</a>
 
 Once the **SQL script** file is generated it will last at the `download_path` until it is downloaded (via WUI) or a certain **retention period** is reached. By default this period is 3600 seconds (ie. 1 hour). However, you may change this value to fit your need. Just change the `file_retention_time` parameter from `app/config/config.yml` file.
 
-Change the value of the parameter `mysql_script_limit` from `app/config/config.yml` file. This value represents the **maximum number of line within the SQL script file** that will be executed. If you don't want to impose any limit then set this value to 0 (zero).
+<a id="script-limit">SQL script limits</a>
+
+If you intend to install this application on a public server (eg. for demo purpose) and to limit the usage of your server resources you might want to limit the number of lines the MySql script generator is going to create (thus saving cpu, memory, disk space and bandwidth). This can be done by changing the value of the `mysql_script_limit` parameter in the `app/config/config.yml` file. This value represents the **maximum number of line within the SQL script file** that will be created and thus executed at migration time. If you don't want to set any limit then set this value to 0 (zero means no limit).
  
  
 ### Usage
 ##### Generating the database SQL script
 
-- If you are using the WUI then just fill out the MySql connection parameters then click the `Generate SQL` button.
+- If you are using the WUI then just fill out the MySql connection parameters shown on the home page then click the `Generate SQL` button.
 - If you are using the CUI then run the following command at your terminal:
 ```bash
 cd mysql-to-postgres # the app directory
