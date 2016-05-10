@@ -19,7 +19,7 @@ Create a directory `DIR` on the system where you want to install this applicatio
 cd  DIR # the newly created directory
 git clone https://github.com/eugenmihailescu/mysql-to-postgres.git # close the project at DIR
 cd mysql-to-postgres # change into the newly cloned app directory
-composer install # this will install the project dependencies
+composer install --no-dev --optimize-autoloader # this will install the project dependencies
 ```
 At some point the install script may ask you to enter some parameters like `database_host`, `mailer_host`, etc. Just respond with the default values (ie. press Enter).
 
