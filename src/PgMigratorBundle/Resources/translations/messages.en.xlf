@@ -1,132 +1,135 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
-	<file source-language="en" target-language="en" datatype="plaintext"
-		original="file.ext">
-		<header>
-			<tool tool-id="symfony" tool-name="Symfony" />
-		</header>
-		<body>
-			<trans-unit id="4b77a0202d9ee2960ffbfa45dc611ad1" resname="label.mysqlsrc">
-				<source>label.mysqlsrc</source>
-				<target>MySql source</target>
-			</trans-unit>
-			<trans-unit id="057bfdb02a24d09ee6c2248130d954a6" resname="label.host">
-				<source>label.host</source>
-				<target>Host</target>
-			</trans-unit>
-			<trans-unit id="1b490c4a7224cabc5d1e9c36e6dde627" resname="placeholder.ip_or_host">
-				<source>placeholder.ip_or_host</source>
-				<target>server.type server ip/hostname</target>
-			</trans-unit>
-			<trans-unit id="d3a921b0ca062c7f861ac9b3c22eb169" resname="label.port">
-				<source>label.port</source>
-				<target>Port</target>
-			</trans-unit>
-			<trans-unit id="ecadc534cc5c829895196d95c79fba52" resname="placeholder.empty_or_port">
-				<source>placeholder.empty_or_port</source>
-				<target>port number (default.port)</target>
-			</trans-unit>
-			<trans-unit id="b8b0549e5bc706eb8ae48ebd7687c6b7" resname="label.dbname">
-				<source>label.dbname</source>
-				<target>Database name</target>
-			</trans-unit>
-			<trans-unit id="76b92fc07ab1ce6f578fd163eb3207e1" resname="placeholder.db_name">
-				<source>placeholder.db_name</source>
-				<target>the server.role database name</target>
-			</trans-unit>
-			<trans-unit id="717ecfaa9d198197bc4a8a5403461d48" resname="label.username">
-				<source>label.username</source>
-				<target>User name</target>
-			</trans-unit>
-			<trans-unit id="ffae5af6089da3e7aaf3e1472dcc2a7e" resname="placeholder.username">
-				<source>placeholder.username</source>
-				<target>server.type username</target>
-			</trans-unit>
-			<trans-unit id="a14f198f3da0de3396729d0fd7636731" resname="label.password">
-				<source>label.password</source>
-				<target>Password</target>
-			</trans-unit>
-			<trans-unit id="b5a0c76072920625fecc322596624fbb" resname="placeholder.mysqlpwd">
-				<source>placeholder.mysqlpwd</source>
-				<target>server.type user password</target>
-			</trans-unit>
-			<trans-unit id="ecf88f06215ea32bec408a198013e391" resname="label.pgsqldst">
-				<source>label.pgsqldst</source>
-				<target>PostgreSQL destination</target>
-			</trans-unit>
-			<trans-unit id="f436b399be47845c0e700297975d69bf" resname="label.gensql">
-				<source>label.gensql</source>
-				<target>Generate SQL</target>
-			</trans-unit>
-			<trans-unit id="0e5d1745690c2bf5a375fcebfe55450a" resname="label.migrate">
-				<source>label.migrate</source>
-				<target>Migrate data</target>
-			</trans-unit>
-			<trans-unit id="36cd38f49b9afa08222c0dc9ebfe35eb" resname="source">
-				<source>source</source>
-				<target>source</target>
-			</trans-unit>
-			<trans-unit id="42aefbae01d2dfd981f7da7d823d689e" resname="target">
-				<source>target</source>
-				<target>target</target>
-			</trans-unit>
-			<trans-unit id="41698a6b0195db2874febb7bdf14a569" resname="label.droptbl">
-				<source>label.droptbl</source>
-				<target>Drop existent tables if exists</target>
-			</trans-unit>
-			<trans-unit id="20fbbb6aad2e41c8a4c18ed7a0daa51b" resname="label.truncdata">
-				<source>label.truncdata</source>
-				<target>Truncate existent data before insert</target>
-			</trans-unit>
-			<trans-unit id="c3688525ba8ae36d20c5e3328e72720d" resname="label.mysqldrop">
-				<source>label.mysqldrop</source>
-				<target>Add `dropstmt` statement</target>
-			</trans-unit>
-			<trans-unit id="ccce7d46ba912a6055a79dcf57c131ae" resname="label.charset">
-				<source>label.charset</source>
-				<target>SQL Charset</target>
-			</trans-unit>
-			<trans-unit id="a7a4b04c50be4b4bcc4f71d77cbee7f7" resname="placeholder.mysqlcharset">
-				<source>placeholder.mysqlcharset</source>
-				<target>server.type valid charset (utf8)</target>
-			</trans-unit>
-			<trans-unit id="application.error">
-				<source>application.error</source>
-				<target>Application error</target>
-			</trans-unit>
-			<trans-unit id="mysqlcharset.hint">
-				<source>mysqlcharset.hint</source>
-				<target>In case of encoding errors while data migration use this
+  <file source-language="en" target-language="en" datatype="plaintext" original="file.ext">
+    <header>
+      <tool tool-id="symfony" tool-name="Symfony"/>
+    </header>
+    <body>
+      <trans-unit id="4b77a0202d9ee2960ffbfa45dc611ad1" resname="label.mysqlsrc">
+        <source>label.mysqlsrc</source>
+        <target>MySql source</target>
+      </trans-unit>
+      <trans-unit id="057bfdb02a24d09ee6c2248130d954a6" resname="label.host">
+        <source>label.host</source>
+        <target>Host</target>
+      </trans-unit>
+      <trans-unit id="1b490c4a7224cabc5d1e9c36e6dde627" resname="placeholder.ip_or_host">
+        <source>placeholder.ip_or_host</source>
+        <target>server.type server ip/hostname</target>
+      </trans-unit>
+      <trans-unit id="d3a921b0ca062c7f861ac9b3c22eb169" resname="label.port">
+        <source>label.port</source>
+        <target>Port</target>
+      </trans-unit>
+      <trans-unit id="ecadc534cc5c829895196d95c79fba52" resname="placeholder.empty_or_port">
+        <source>placeholder.empty_or_port</source>
+        <target>port number (default.port)</target>
+      </trans-unit>
+      <trans-unit id="b8b0549e5bc706eb8ae48ebd7687c6b7" resname="label.dbname">
+        <source>label.dbname</source>
+        <target>Database name</target>
+      </trans-unit>
+      <trans-unit id="76b92fc07ab1ce6f578fd163eb3207e1" resname="placeholder.db_name">
+        <source>placeholder.db_name</source>
+        <target>the server.role database name</target>
+      </trans-unit>
+      <trans-unit id="717ecfaa9d198197bc4a8a5403461d48" resname="label.username">
+        <source>label.username</source>
+        <target>User name</target>
+      </trans-unit>
+      <trans-unit id="ffae5af6089da3e7aaf3e1472dcc2a7e" resname="placeholder.username">
+        <source>placeholder.username</source>
+        <target>server.type username</target>
+      </trans-unit>
+      <trans-unit id="a14f198f3da0de3396729d0fd7636731" resname="label.password">
+        <source>label.password</source>
+        <target>Password</target>
+      </trans-unit>
+      <trans-unit id="b5a0c76072920625fecc322596624fbb" resname="placeholder.mysqlpwd">
+        <source>placeholder.mysqlpwd</source>
+        <target>server.type user password</target>
+      </trans-unit>
+      <trans-unit id="ecf88f06215ea32bec408a198013e391" resname="label.pgsqldst">
+        <source>label.pgsqldst</source>
+        <target>PostgreSQL destination</target>
+      </trans-unit>
+      <trans-unit id="f436b399be47845c0e700297975d69bf" resname="label.gensql">
+        <source>label.gensql</source>
+        <target>Generate SQL</target>
+      </trans-unit>
+      <trans-unit id="0e5d1745690c2bf5a375fcebfe55450a" resname="label.migrate">
+        <source>label.migrate</source>
+        <target>Migrate data</target>
+      </trans-unit>
+      <trans-unit id="36cd38f49b9afa08222c0dc9ebfe35eb" resname="source">
+        <source>source</source>
+        <target>source</target>
+      </trans-unit>
+      <trans-unit id="42aefbae01d2dfd981f7da7d823d689e" resname="target">
+        <source>target</source>
+        <target>target</target>
+      </trans-unit>
+      <trans-unit id="41698a6b0195db2874febb7bdf14a569" resname="label.droptbl">
+        <source>label.droptbl</source>
+        <target>Drop existent tables if exists</target>
+      </trans-unit>
+      <trans-unit id="20fbbb6aad2e41c8a4c18ed7a0daa51b" resname="label.truncdata">
+        <source>label.truncdata</source>
+        <target>Truncate existent data before insert</target>
+      </trans-unit>
+      <trans-unit id="c3688525ba8ae36d20c5e3328e72720d" resname="label.mysqldrop">
+        <source>label.mysqldrop</source>
+        <target>Add `dropstmt` statement</target>
+      </trans-unit>
+      <trans-unit id="ccce7d46ba912a6055a79dcf57c131ae" resname="label.charset">
+        <source>label.charset</source>
+        <target>SQL Charset</target>
+      </trans-unit>
+      <trans-unit id="a7a4b04c50be4b4bcc4f71d77cbee7f7" resname="placeholder.mysqlcharset">
+        <source>placeholder.mysqlcharset</source>
+        <target>server.type valid charset (utf8)</target>
+      </trans-unit>
+      <trans-unit id="448645e06847cb1a3a2043fb18b93310" resname="application.error">
+        <source>application.error</source>
+        <target>Application error</target>
+      </trans-unit>
+      <trans-unit id="5e29b8734b1496685e5c169c683da310" resname="mysqlcharset.hint">
+        <source>mysqlcharset.hint</source>
+        <target>In case of encoding errors while data migration use this
 				</target>
-			</trans-unit>
-			<trans-unit id="label.blockui">
-				<source>label.blockui</source>
-				<target>Please wait..</target>
-			</trans-unit>
-			<trans-unit id="no.progress">
-				<source>no.progress</source>
-				<target>no progress available</target>
-			</trans-unit>
-			<trans-unit id="ignoreerror">
-				<source>label.ignoreerror</source>
-				<target>Ignore SQL errors and continue</target>
-			</trans-unit>
-			<trans-unit id="label.acidbatch">
-				<source>label.acidbatch</source>
-				<target>Run migration within a single transaction</target>
-			</trans-unit>
-			<trans-unit id="btn.download">
-				<source>btn.download</source>
-				<target>Download the .sql script</target>
-			</trans-unit>
-			<trans-unit id="mysql.success">
-				<source>mysql.success</source>
-				<target>The MySql database was scripted successfully</target>
-			</trans-unit>
-			<trans-unit id="pgsql.success">
-				<source>pgsql.success</source>
-				<target>The PostgreSql database was migrated successfully</target>
-			</trans-unit>
-		</body>
-	</file>
+      </trans-unit>
+      <trans-unit id="67a16f5d1c313bc14c2cf1af2ef858b8" resname="label.blockui">
+        <source>label.blockui</source>
+        <target>Please wait..</target>
+      </trans-unit>
+      <trans-unit id="aaf0c9cc37441688f3d21a47246de42e" resname="no.progress">
+        <source>no.progress</source>
+        <target>no progress available</target>
+      </trans-unit>
+      <trans-unit id="740367a067eb93de899bf40309fcfdd1" resname="label.ignoreerror">
+        <source>label.ignoreerror</source>
+        <target>Ignore SQL errors and continue</target>
+      </trans-unit>
+      <trans-unit id="cb3b351692c1f732646815e2b2b688e0" resname="label.acidbatch">
+        <source>label.acidbatch</source>
+        <target>Run migration within a single transaction</target>
+      </trans-unit>
+      <trans-unit id="d8402e5ef7fdab8384be60ec5da15e87" resname="btn.download">
+        <source>btn.download</source>
+        <target>Download the .sql script</target>
+      </trans-unit>
+      <trans-unit id="b84733385564f90fa01c7ea3a563cd47" resname="mysql.success">
+        <source>mysql.success</source>
+        <target>The MySql database was scripted successfully</target>
+      </trans-unit>
+      <trans-unit id="22243da4db17ed916f5ca94ba2bcb07f" resname="pgsql.success">
+        <source>pgsql.success</source>
+        <target>The PostgreSql database was migrated successfully</target>
+      </trans-unit>
+      <trans-unit id="3e42099407918a93ece3935a1ece333d" resname="app.description">
+        <source>app.description</source>
+        <target>This tool aids in generating a PostgreSql script for a MySql database. Moreover it allows you to migrate that script automatically on a PostgreSql server.</target>
+      </trans-unit>
+    </body>
+  </file>
 </xliff>
