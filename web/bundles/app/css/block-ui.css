@@ -1,0 +1,40 @@
+@CHARSET "UTF-8";
+
+.block-ui-off {
+	display: none !important;
+}
+
+.block-ui-wall, .block-ui-label {
+	display: block;
+}
+
+.block-ui-wall {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: #B2B2B2;
+	z-index: 99998;
+}
+
+.block-ui-label {
+	text-align: center;
+	padding: 20px;
+	width: 25%;
+	background-color: #fff;
+	position: absolute;
+	height: auto;
+	margin-left: 37.5%;
+	margin-right: 37.5%;
+	top: -webkit-calc(50% - 30px);
+	top: expression(50% - 30px);
+	top: -moz-calc(50% - 30px);
+	top: -o-calc(50% - 30px);
+	top: calc(50% - 30px);
+	z-index: 99999;
+	border: 3px solid #AAA;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+}

@@ -38,6 +38,7 @@
 	<buildpathentry kind="src" path="vendor/composer"/>
 	<buildpathentry kind="src" path="vendor/doctrine/instantiator/src/Doctrine/Instantiator"/>
 	<buildpathentry kind="src" path="vendor/sensio/distribution-bundle"/>
+	<buildpathentry kind="src" path="vendor/symfony/phpunit-bridge"/>
 	<buildpathentry kind="src" path="vendor/doctrine/collections/lib"/>
 	<buildpathentry kind="src" path="vendor/symfony/symfony/src/Symfony/Component/Intl/Resources/stubs"/>
 	<buildpathentry kind="src" path="src"/>
