@@ -11,6 +11,7 @@ It is built on top of Symfony Framework 3.0.
 * PHP 5.5.9 :: [read more](http://symfony.com/doc/current/reference/requirements.html)
 * [composer](https://getcomposer.org/doc/00-intro.md#installation-linux-unix-osx)
 * 60+ MB space on disk
+
 ### How to install
 
 Create a directory `DIR` on the system where you want to install this application. Type the following command at the terminal:
@@ -29,6 +30,22 @@ bin/console server:run # now test the app at: http://localhost:8000
 ```
 In case you want to install this application at a web server then [follow these instruction](http://symfony.com/doc/current/cookbook/configuration/web_server_configuration.html).
 
+### Configuration
+
+1. Localization
+2. Temporary data and download path
+3. Temporary SQL files retention period
+4. SQL script limits
+
+Right now the application is **localized** only in English. If you want to translate it to some other language then clone `src/PgMigratorBundle/Resources/translations/messages.en.xlf` to `messages.XX.xlf` where `XX` is your target language. In the newly created file change the English content of each `target` tag. To activate the newly created language change the parameter `locale: en` to `locale: XX` in `app/config/config.yml` file.
+
+Change the (**relative|absolute**) **path** of the parameters `data_path` respectively `download_path` from `app/config/config.yml` file.
+
+Once the **SQL script** file is generated it will last at the `download_path` until it is downloaded (via WUI) or a certain **retention period** is reached. By default this period is 3600 seconds (ie. 1 hour). However, you may change this value to fit your need. Just change the `file_retention_time` parameter from `app/config/config.yml` file.
+
+Change the value of the parameter `mysql_script_limit` from `app/config/config.yml` file. This value represents the **maximum number of line within the SQL script file** that will be executed. If you don't want to impose any limit then set this value to 0 (zero).
+ 
+ 
 ### Usage
 ##### Generating the database SQL script
 
