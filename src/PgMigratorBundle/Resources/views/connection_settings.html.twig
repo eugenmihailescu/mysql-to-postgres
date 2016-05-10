@@ -19,8 +19,9 @@ function sendAlert(message,is_error){
 	is_error='undefined'==typeof is_error?false:is_error;
 	var alert_div="<div class='alert alert-"+(is_error?'danger':'success')+"'>";
 	alert_div+="<button type='button' class='close' data-dismiss='alert' aria-label='Close'>";
-	alert_div+="<span aria-hidden='true'>&times;</span></button><span>"+message+"</span></div>";
+	alert_div+="<span aria-hidden='true'>&times;</span></button><span style='word-wrap: break-word;'>"+message+"</span></div>";
 	$('#notification_bar').append(alert_div).removeClass(hidden_class);
+	$("html,body").animate({ scrollTop: 0 }, "slow");
 }
 
 function getCommonParams(driver){
