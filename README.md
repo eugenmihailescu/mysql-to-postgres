@@ -4,10 +4,20 @@ This application allows you to migrate a MySql databse to a Postgres server. It 
 - migrate the MySql database to a Postgres SQL server
 - web user interface (WUI) and console user interface (CUI)
 
+This tool converts the following MySQL objects:
+- the table along with its primary key, auto-increment columns and its columns constraints
+- the table indexes
+- the table foreign keys
 
-It is built on top of Symfony Framework 3.0.
+> Note:
+> the MySQL autoincrement columns will be bounded to their PostgreSQL coresponding sequences.
 
+If the target PostgreSQL database does not exist it will be created automatically using the current connection credentials.
+ 
 ### Requirements
+
+This application is built on top of Symfony Framework 3.0 so many of its requirements derives from it:
+
 * PHP 5.5.9 :: [read more](http://symfony.com/doc/current/reference/requirements.html)
 * [composer](https://getcomposer.org/doc/00-intro.md#installation-linux-unix-osx)
 * 60+ MB space on disk
@@ -61,6 +71,13 @@ If you intend to install this application on a public server and you want to lim
 ### Usage
 ##### Generating the database SQL script
 
+The following information are required to create the PostgreSQL script of a MySQL database:
+- Host name/IP address and the port number of the MySQL server
+- MySQL user name and password
+- optionally you may specify the SQL charset to use while encoding/writting the resulted SQL script
+- optionally you may choose to add a `DROP` statement before each `CREATE TABLE` which will attempt to drop and recreate the tables on the target server if they already exist
+ 
+You can generate the database SQL script using any of the following methods: 
 - If you are using the WUI then just fill out the MySql connection parameters shown on the home page then click the `Generate SQL` button.
 - If you are using the CUI then run the following command at your terminal:
 ```bash
@@ -70,6 +87,17 @@ bin/console help db:mysql-script # will print-out the help for this command
 and run the `bin/console db:mysql-script` command using the syntax shown by help.
 
 ##### Migrating the MySql database to Postgres SQL server
+
+The following information are required to migrate the MySQL database to a PostgreSQL target server:
+- the MySQL connection parameters described above
+- Host name/IP address and the port number of the target PostgreSQL server
+- PostgreSQL user name and password
+- optionally you may specify to attempt to `DROP` the target tables if they already exists, regardless of the option you set at MySQL source options
+- optionally you may choose to `TRUNCATE` the existent data within the PostgreSQL database before `INSERT`
+- optionally you may choose to ignore the errors that may occur while running the migration script. This is desirable in case you are very-very disperate although this is not recommended
+- optionally you may choose to run the whole migration enclosed within a SQL transaction. This will guarantee that either all statements are successfully executed otherwise the whole batch will be rolled-back
+
+You can migrate the MySQL source database to a PostgreSQL target server using any of the following methods:
 - If you are using the WUI then fill out the MySql and Postgres SQL connection parameters then click the `Migrate data` button.
 - If you are using the CUI then run the following command at your terminal:
 ```bash
