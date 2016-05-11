@@ -4,9 +4,18 @@ This application allows you to migrate a MySql databse to a Postgres server. It 
 - migrate the MySql database to a Postgres SQL server
 - web user interface (WUI) and console user interface (CUI)
 
-
 It is built on top of Symfony Framework 3.0.
 
+This tool converts the following MySQL objects:
+- the table along with its primary key, auto-increment columns and its columns constraints
+- the table indexes
+- the table foreign keys
+
+> Note:
+> the MySQL autoincrement columns will be bounded to their PostgreSQL coresponding sequences.
+
+If the target PostgreSQL database does not exist it will be created automatically using the current connection credentials.
+ 
 ### Requirements
 * PHP 5.5.9 :: [read more](http://symfony.com/doc/current/reference/requirements.html)
 * [composer](https://getcomposer.org/doc/00-intro.md#installation-linux-unix-osx)
