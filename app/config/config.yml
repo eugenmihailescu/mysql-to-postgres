@@ -11,6 +11,7 @@ parameters:
     data_path: "%kernel.root_dir%/../var/tmp"
     mysql_script_limit: 10000000 # bytes
     file_retention_time: 3600 # seconds
+    restricted_hosts: "127.0.0.1,localhost"
 
 framework:
     #esi:             ~

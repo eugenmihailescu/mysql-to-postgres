@@ -112,7 +112,8 @@ class PostgreSQLScriptCommand extends ContainerAwareCommand {
 				'download_path',
 				'data_path',
 				'mysql_script_limit',
-				'file_retention_time' 
+				'file_retention_time',
+				'restricted_hosts' 
 		);
 		
 		$migrator = new PostgreSQLMigrator ( $request, $this->getGlobalParameters ( $keys ) );

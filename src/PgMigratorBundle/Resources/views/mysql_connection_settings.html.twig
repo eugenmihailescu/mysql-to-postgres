@@ -118,7 +118,7 @@ function generateSQL($,callback){
 			if(data.success)
 			{
 				$('#mysql-download-link').removeClass(hidden_class).bind('click',function(){
-					location.href='/download/'+data.filename;
+					location.href='{{ path('downloadfile') }}/'+data.filename;
 					$(this).addClass(hidden_class);
 				});
 

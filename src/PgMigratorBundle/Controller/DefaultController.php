@@ -83,7 +83,8 @@ class DefaultController extends Controller {
 			$keys = array (
 					'download_path',
 					'data_path',
-					'mysql_script_limit' 
+					'mysql_script_limit',
+					'restricted_hosts' 
 			);
 			
 			$script = new MySQLScript ( $request->request, $this->getGlobalParameters ( $keys ) );
@@ -109,7 +110,8 @@ class DefaultController extends Controller {
 		try {
 			$keys = array (
 					'download_path',
-					'data_path' 
+					'data_path',
+					'restricted_hosts' 
 			);
 			
 			$migrator = new PostgreSQLMigrator ( $request->request, $this->getGlobalParameters ( $keys ) );

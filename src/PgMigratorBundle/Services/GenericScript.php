@@ -8,6 +8,7 @@ use Doctrine\DBAL\DriverManager;
 use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\HttpFoundation\File\Exception\AccessDeniedException;
 
 class GenericScript implements GenericScriptInterfce, ContainerAwareInterface {
 	/**
@@ -170,6 +171,9 @@ class GenericScript implements GenericScriptInterfce, ContainerAwareInterface {
 	 */
 	protected function getConnection($driver = 'mysql', $params = array()) {
 		$params = array_merge ( $this->request, $params );
+		
+		if (isset ( $this->global_params ['restricted_hosts'] ) && in_array ( $params ['host'], explode ( ',', $this->global_params ['restricted_hosts'] ) ))
+			throw new \Symfony\Component\Security\Core\Exception\AccessDeniedException ();
 		
 		if (empty ( $params ['charset'] ))
 			unset ( $params ['charset'] );

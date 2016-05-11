@@ -18,7 +18,8 @@ migratedata:
 downloadfile:
   path: /download/{tmpname}
   defaults:
-    _controller: PgMigratorBundle:Default:downloadFile  
+    _controller: PgMigratorBundle:Default:downloadFile
+    tmpname: ~  
 progress:
   path: /progress/{token}
   defaults:

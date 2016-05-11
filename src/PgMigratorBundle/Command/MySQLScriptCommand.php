@@ -111,7 +111,8 @@ class MySQLScriptCommand extends ContainerAwareCommand {
 				'download_path',
 				'data_path',
 				'mysql_script_limit',
-				'file_retention_time' 
+				'file_retention_time',
+				'restricted_hosts' 
 		);
 		
 		$script = new MySQLScript ( $request, $this->getGlobalParameters ( $keys ) );

@@ -36,6 +36,7 @@ In case you want to install this application on a web server then [follow these 
 2. [Temporary data and download path](#temp-path)
 3. [Temporary SQL files retention period](#retention)
 4. [SQL script limits](#script-limit)
+5. [Security](#security)
 
 <a id="localization">Localization</a>
 
@@ -53,6 +54,9 @@ Once the **SQL script** file is generated it will last at the `download_path` un
 
 If you intend to install this application on a public server (eg. for demo purpose) and to limit the usage of your server resources you might want to limit the number of lines the MySql script generator is going to create (thus saving cpu, memory, disk space and bandwidth). This can be done by changing the value of the `mysql_script_limit` parameter in the `app/config/config.yml` file. This value represents the **maximum number of line within the SQL script file** that will be created and thus executed at migration time. If you don't want to set any limit then set this value to 0 (zero means no limit).
  
+<a id="security">Security</a>
+
+If you intend to install this application on a public server and you want to limit the database host/ip the application may use then you will want to change the `restricted_hosts` parameter in the `app/config/config.yml` file. This is a comma-delimited list of dns host names and/or ip addresses of those database servers that the application won't be able to access.  
  
 ### Usage
 ##### Generating the database SQL script
