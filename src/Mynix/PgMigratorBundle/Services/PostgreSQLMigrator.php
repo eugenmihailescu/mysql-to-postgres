@@ -1,6 +1,6 @@
 <?php
 
-namespace PgMigratorBundle\Services;
+namespace Mynix\PgMigratorBundle\Services;
 
 use Symfony\Component\HttpFoundation\ParameterBag;
 

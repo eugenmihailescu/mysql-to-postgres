@@ -1,6 +1,6 @@
 <?php
 
-namespace PgMigratorBundle;
+namespace Mynix\PgMigratorBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 

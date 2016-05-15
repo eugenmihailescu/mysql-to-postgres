@@ -1,6 +1,6 @@
 <?php
 
-namespace PgMigratorBundle\Controller;
+namespace Mynix\PgMigratorBundle\Controller;
 
 /**
  * PHP encoding helper class

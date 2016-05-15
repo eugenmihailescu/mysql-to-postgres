@@ -1,9 +1,9 @@
 <?php
 
-namespace PgMigratorBundle\Services;
+namespace Mynix\PgMigratorBundle\Services;
 
-use PgMigratorBundle\Controller\NonQuotableColumnTypes;
-use PgMigratorBundle\Controller\PostgreSQLAsset;
+use Mynix\PgMigratorBundle\Controller\NonQuotableColumnTypes;
+use Mynix\PgMigratorBundle\Controller\PostgreSQLAsset;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Platforms\Keywords\PostgreSQLKeywords;

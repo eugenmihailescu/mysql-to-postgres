@@ -1,6 +1,6 @@
 <?php
 
-namespace PgMigratorBundle\Services;
+namespace Mynix\PgMigratorBundle\Services;
 
 use Doctrine\DBAL\Configuration;
 use Doctrine\DBAL\Connection;

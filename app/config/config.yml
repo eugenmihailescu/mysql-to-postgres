@@ -73,47 +73,24 @@ doctrine:
 assetic:
   filters:
     cssrewrite: ~
-    
   assets:
     app_css:
       inputs:
-        - %kernel.root_dir%/../web/bundles/app/css/block-ui.css
+        - %kernel.root_dir%/../src/Mynix/PgMigratorBundle/Resources/public/css/block-ui.css
       filters: [cssrewrite]
     app_js:
       inputs:
-        - %kernel.root_dir%/../web/bundles/app/js/block-ui.js
+        - %kernel.root_dir%/../src/Mynix/PgMigratorBundle/Resources/public/js/block-ui.js
     bootstrap_js:
       inputs:
-        - %kernel.root_dir%/../vendor/components/bootstrap/js/bootstrap.js
-    bootstrap_validator:
-        inputs:
-          - %kernel.root_dir%/../vendor/bower-asset/bootstrap-validator/dist/validator.js
+        - https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js
     bootstrap_css:
       inputs:
-        - %kernel.root_dir%/../vendor/components/bootstrap/css/bootstrap.css
-        - %kernel.root_dir%/../vendor/components/bootstrap/css/bootstrap-theme.css
-      filters: [cssrewrite]
-              
-    bootstrap_glyphicons_ttf:
+        - https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css
+    bootstrap_validator_js:
       inputs:
-        - %kernel.root_dir%/../vendor/components/bootstrap/fonts/glyphicons-halflings-regular.ttf
-      output: "fonts/glyphicons-halflings-regular.ttf"
-      
-    bootstrap_glyphicons_eot:
-      inputs:
-        - %kernel.root_dir%/../vendor/components/bootstrap/fonts/glyphicons-halflings-regular.eot
-      output: "fonts/glyphicons-halflings-regular.eot"
-            
-    bootstrap_glyphicons_svg:
-      inputs:
-        - %kernel.root_dir%/../vendor/components/bootstrap/fonts/glyphicons-halflings-regular.svg
-      output: "fonts/glyphicons-halflings-regular.svg"
-    bootstrap_glyphicons_woff:
-        inputs:
-          - %kernel.root_dir%/../vendor/components/bootstrap/fonts/glyphicons-halflings-regular.woff
-        output: "fonts/glyphicons-halflings-regular.woff"      
-
+        - https://cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.10.2/validator.min.js
     jquery:
       inputs:
-        - %kernel.root_dir%/../vendor/bower-asset/jquery/dist/jquery.js
+        - https://code.jquery.com/jquery-2.2.3.min.js
         

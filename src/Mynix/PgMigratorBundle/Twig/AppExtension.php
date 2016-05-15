@@ -1,6 +1,6 @@
 <?php
 
-namespace PgMigratorBundle\Twig;
+namespace Mynix\PgMigratorBundle\Twig;
 
 class AppExtension extends \Twig_Extension {
 	public function getFilters() {

@@ -5,7 +5,7 @@ parameters:
 
 services:
     app.twig_extension:
-        class: PgMigratorBundle\Twig\AppExtension
+        class: Mynix\PgMigratorBundle\Twig\AppExtension
         public: false
         tags:
             - { name: twig.extension }

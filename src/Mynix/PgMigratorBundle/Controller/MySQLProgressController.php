@@ -1,6 +1,6 @@
 <?php
 
-namespace PgMigratorBundle\Controller;
+namespace Mynix\PgMigratorBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;

@@ -1,13 +1,13 @@
 <?php
 
-namespace PgMigratorBundle\Controller;
+namespace Mynix\PgMigratorBundle\Controller;
 
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use PgMigratorBundle\Services\MySQLScript;
-use PgMigratorBundle\Services\PostgreSQLMigrator;
+use Mynix\PgMigratorBundle\Services\MySQLScript;
+use Mynix\PgMigratorBundle\Services\PostgreSQLMigrator;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**

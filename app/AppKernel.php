@@ -12,7 +12,7 @@ class AppKernel extends Kernel {
 				new Doctrine\Bundle\DoctrineBundle\DoctrineBundle (),
 				new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle (),
 				new Symfony\Bundle\AsseticBundle\AsseticBundle (),
-				new PgMigratorBundle\PgMigratorBundle () 
+				new Mynix\PgMigratorBundle\PgMigratorBundle () 
 		];
 		
 		if (in_array ( $this->getEnvironment (), [ 

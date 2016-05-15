@@ -1,14 +1,14 @@
 <?php
 
-namespace PgMigratorBundle\Command;
+namespace Mynix\PgMigratorBundle\Command;
 
 use Doctrine\DBAL\Platforms\PostgreSqlPlatform;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use PgMigratorBundle\Services\MySQLScript;
 use Symfony\Component\HttpFoundation\ParameterBag;
+use Mynix\PgMigratorBundle\Services\PostgreSQLMigrator;
 
 /**
  * MySQL database script generator service
@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\ParameterBag;
  * @author Eugen Mihailescu
  *        
  */
-class MySQLScriptCommand extends ContainerAwareCommand {
+class PostgreSQLScriptCommand extends ContainerAwareCommand {
 	/**
 	 *
 	 * @var array
@@ -63,7 +63,7 @@ class MySQLScriptCommand extends ContainerAwareCommand {
 		
 		$this->pg_platform = new PostgreSqlPlatform ();
 		
-		$args = new MySQLScriptArguments ();
+		$args = new PostgreSQLScriptArguments ();
 		
 		$this->valid_args = $args->getArguments ();
 		
@@ -77,9 +77,9 @@ class MySQLScriptCommand extends ContainerAwareCommand {
 	 * @see \Symfony\Component\Console\Command\Command::configure()
 	 */
 	protected function configure() {
-		$this->setName ( 'db:mysql-script' );
+		$this->setName ( 'db:pg-migrate' );
 		
-		$this->setDescription ( 'Create PostgresMySql script of a MySql database' );
+		$this->setDescription ( 'Migrate a MySql database to a PostgreSql server' );
 		
 		foreach ( $this->valid_args as $arg_name => $arg_opt )
 			$this->addArgument ( $arg_name, $arg_opt [0], $arg_opt [1] );
@@ -94,7 +94,7 @@ class MySQLScriptCommand extends ContainerAwareCommand {
 	protected function execute(InputInterface $input, OutputInterface $output) {
 		$params = array ();
 		
-		$args = new MySQLScriptArguments ();
+		$args = new PostgreSQLScriptArguments ();
 		
 		foreach ( array_keys ( $this->valid_args ) as $arg_name ) {
 			if ($input->hasArgument ( $arg_name ) && ! $args->isValidArgument ( $arg_name, $input->getArgument ( $arg_name ) ))
@@ -104,7 +104,8 @@ class MySQLScriptCommand extends ContainerAwareCommand {
 		}
 		
 		$request = new ParameterBag ( array (
-				'mysql' => $params 
+				'pgsql' => $params,
+				'filename' => $params ['filename'] 
 		) );
 		
 		$keys = array (
@@ -115,21 +116,19 @@ class MySQLScriptCommand extends ContainerAwareCommand {
 				'restricted_hosts' 
 		);
 		
-		$script = new MySQLScript ( $request, $this->getGlobalParameters ( $keys ) );
-		$script->setContainer ( $this->getContainer () );
+		$migrator = new PostgreSQLMigrator ( $request, $this->getGlobalParameters ( $keys ) );
+		$migrator->setContainer ( $this->getContainer () );
 		
-		$script->onError = array (
+		$migrator->onError = array (
 				$this,
 				'onError' 
 		);
 		
-		$response = $script->run ();
+		$response = $migrator->run ();
 		
 		$output->writeln ( $response ['message'] ['content'] );
 		
-		if ($response ['success']) {
-			$output->writeln ( sprintf ( 'Script saved at : %s', $this->getContainer ()->getParameter ( 'data_path' ) . '/' . $response ['filename'] ) );
-		} else {
+		if (! $response ['success']) {
 			$output->writeln ( sprintf ( '%s : %s', $response ['message'] ['file'], $response ['message'] ['line'] ) );
 		}
 		

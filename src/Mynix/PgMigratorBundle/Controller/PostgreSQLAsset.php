@@ -1,6 +1,6 @@
 <?php
 
-namespace PgMigratorBundle\Controller;
+namespace Mynix\PgMigratorBundle\Controller;
 
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Platforms\AbstractPlatform;

@@ -1,6 +1,6 @@
 <?php
 
-namespace PgMigratorBundle\Command;
+namespace Mynix\PgMigratorBundle\Command;
 
 use Symfony\Component\Console\Input\InputArgument;
 
