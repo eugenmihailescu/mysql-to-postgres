@@ -20,7 +20,7 @@ This application is built on top of Symfony Framework 3.0 so many of its require
 
 * PHP 5.5.9 :: [read more](http://symfony.com/doc/current/reference/requirements.html)
 * [composer](https://getcomposer.org/doc/00-intro.md#installation-linux-unix-osx)
-* 60+ MB space on disk
+* 60+ MB space on disk (99% is Symfony alone)
 
 ### How to install
 
