@@ -440,6 +440,7 @@ class MySQLScript extends GenericScript {
 	}
 	
 	/**
+	 * Caches the table schema
 	 *
 	 * @param Connection $conn        	
 	 * @param Table $table        	
@@ -479,6 +480,73 @@ class MySQLScript extends GenericScript {
 	}
 	
 	/**
+	 * Generates the DROP|CREATE TABLE sql statement
+	 *
+	 * @param Table $table        	
+	 * @return array Returns an array of SQL statements necessary to (re)create the SQL table
+	 */
+	private function getCreateTableSQL(Table $table) {
+		$droptables = in_array ( $this->request ['droptables'], array (
+				'1',
+				'on',
+				'true' 
+		) );
+		
+		$create_sql = array ();
+		$columns_sql = array ();
+		
+		$droptables && $create_sql [] = sprintf ( 'DROP TABLE IF EXISTS %s', $table->getName () );
+		
+		$colsDef = $this->getTableColsCreate ( $table );
+		$columns_sql = $colsDef [0];
+		$autoinc_cols = $colsDef [1];
+		
+		// autoincrement sequence must exist before table creation
+		foreach ( $autoinc_cols as $column ) {
+			$create_sql = array_merge ( $create_sql, $this->getColSeqCreate ( $table, $column, $droptables ) );
+		}
+		
+		$table_sql = sprintf ( 'CREATE TABLE %s%s', $droptables ? '' : 'IF NOT EXISTS ', $table->getName () );
+		
+		$table_sql .= '(' . implode ( ',', $columns_sql );
+		
+		if ($table->hasPrimaryKey ()) {
+			$pk = $table->getPrimaryKey ();
+			$table_sql .= sprintf ( ',CONSTRAINT %s_pkey PRIMARY KEY (%s)', $table->getName (), implode ( ',', $pk->getQuotedColumns ( $this->pg_platform ) ) );
+		}
+		
+		$table_sql .= ')';
+		
+		$create_sql [] = $table_sql;
+		
+		return $create_sql;
+	}
+	
+	/**
+	 * Initialize the job before run
+	 */
+	private function init() {
+		$this->conn = $this->getConnection ();
+		
+		$platform = $this->conn->getDatabasePlatform ();
+		
+		$this->registerTypeMappings ( $platform );
+		
+		/**
+		 * this is an early estimation of progress max which
+		 * is given by the total # of rec in database +
+		 * the total # of create table/index SQL statements
+		 */
+		$this->max_progress = $this->getCurrentDbRowCount ();
+		
+		$this->current_progress = 1;
+		
+		$this->job_start_time = time ();
+		
+		$this->temp_file = $this->getTempFile ();
+	}
+	
+	/**
 	 * Creates a SQL script file for all tables within a given MySQL database
 	 *
 	 * @return boolean[]|string[]|NULL[][]
@@ -500,78 +568,36 @@ class MySQLScript extends GenericScript {
 		
 		try {
 			
-			$droptables = in_array ( $this->request ['droptables'], array (
-					'1',
-					'on',
-					'true' 
-			) );
-			
 			$charset = $this->request ['charset'];
 			
 			empty ( $charset ) && $charset = null;
 			
-			$this->conn = $this->getConnection ();
-			
-			$platform = $this->conn->getDatabasePlatform ();
-			
-			$this->registerTypeMappings ( $platform );
+			$this->init ();
 			
 			$sm = $this->conn->getSchemaManager ();
 			
 			$tables = $sm->listTables ();
 			
 			/**
-			 * this is an early estimation of progress max which
-			 * is given by the total # of rec in database +
-			 * the total # of create table/index SQL statements
+			 * Generate SQL script for all tables
 			 */
-			$this->max_progress = $this->getCurrentDbRowCount ();
-			
-			$this->current_progress = 1;
-			
-			$this->job_start_time = time ();
-			
-			$this->temp_file = $this->getTempFile ();
-			
-			// iterate all database tables
 			foreach ( $tables as $table_obj ) {
 				
-				// store the table's raw columns defs into cache
+				// caches the table's schema
 				$this->initTableRawDefs ( $table_obj );
 				
-				$create_sql = array ();
+				// get the CREATE TABLE sql statement
+				$create_sql = $this->getCreateTableSQL ( $table_obj );
 				
-				$droptables && $create_sql [] = sprintf ( 'DROP TABLE IF EXISTS %s', $table_obj->getName () );
-				
-				$columns_sql = array ();
-				
-				$colsDef = $this->getTableColsCreate ( $table_obj );
-				$columns_sql = $colsDef [0];
-				$autoinc_cols = $colsDef [1];
-				
-				// autoincrement sequence must exist before table creation
-				foreach ( $autoinc_cols as $column ) {
-					$create_sql = array_merge ( $create_sql, $this->getColSeqCreate ( $table_obj, $column, $droptables ) );
-				}
-				
-				$table_sql = sprintf ( 'CREATE TABLE %s%s', $droptables ? '' : 'IF NOT EXISTS ', $table_obj->getName () );
-				
-				$table_sql .= '(' . implode ( ',', $columns_sql );
-				
-				if ($table_obj->hasPrimaryKey ()) {
-					$pk = $table_obj->getPrimaryKey ();
-					$table_sql .= sprintf ( ',CONSTRAINT %s_pkey PRIMARY KEY (%s)', $table_obj->getName (), implode ( ',', $pk->getQuotedColumns ( $this->pg_platform ) ) );
-				}
-				
-				$table_sql .= ')';
-				
-				$create_sql [] = $table_sql;
-				
+				// get the CREATE INDEX|FOREIGN KEY sql statement
 				$create_sql = array_merge ( $create_sql, $this->getTableForeignKeys ( $table_obj ), $this->getTableIndexes ( $table_obj ) );
 				
 				// increase the progress maximum size
 				$this->max_progress += count ( $create_sql );
 				
+				/**
+				 * Stop when the SQL script limit has been reached
+				 */
 				$mysql_script_limit = false;
 				
 				// write table create statement and update the progress via callback

@@ -173,7 +173,7 @@ class GenericScript implements GenericScriptInterfce, ContainerAwareInterface {
 		$params = array_merge ( $this->request, $params );
 		
 		if (isset ( $this->global_params ['restricted_hosts'] ) && in_array ( $params ['host'], explode ( ',', $this->global_params ['restricted_hosts'] ) ))
-			throw new \Symfony\Component\Security\Core\Exception\AccessDeniedException ();
+			throw new \Symfony\Component\Security\Core\Exception\AccessDeniedException ( sprintf ( $this->trans ( 'host.access_denied' ), $params ['host'] ) );
 		
 		if (empty ( $params ['charset'] ))
 			unset ( $params ['charset'] );
@@ -182,6 +182,7 @@ class GenericScript implements GenericScriptInterfce, ContainerAwareInterface {
 		
 		$config = new Configuration ();
 		
+		file_put_contents ( '/tmp/params', print_r ( $params, 1 ) );
 		return DriverManager::getConnection ( $params, $config );
 	}
 	

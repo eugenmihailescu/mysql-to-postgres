@@ -129,11 +129,15 @@ function generateSQL($,callback){
 			}
 			else
 			{
-				var error_msg=data.message.content+"\n"+data.warning+"\n"+data.message.trace, 
+				var error_msg=[data.message.content], 
 					error_file=data.message.file,
 					error_line=data.message.line;
+
+				data.warning && error_msg.push(data.warning);
+
+				'undefined'==typeof data.message.trace || error_msg.push(data.message.trace);
 				
-				onError(xhr,'{{ 'application.error'|trans }}',new Error(error_msg, error_file, error_line));
+				onError(xhr,'{{ 'application.error'|trans }}',new Error(error_msg.join("\n"), error_file, error_line));
 			}
 		}
 		catch(e){
